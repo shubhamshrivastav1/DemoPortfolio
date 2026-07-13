@@ -48,6 +48,7 @@
   }
 
   *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
 
   body{
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -365,19 +366,37 @@
     flex: 1;
     margin-bottom: 16px;
   }
-  .see-code{
+  .project-actions{
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .see-code,
+  .live-site{
     align-self: flex-start;
-    background: var(--accent-red-dark);
-    color: #fff;
+    flex: 1 1 0;
+    min-width: 110px;
+    text-align: center;
     padding: 9px 18px;
     border-radius: 6px;
     font-size: 0.85rem;
     font-weight: 700;
-    border: none;
+    line-height: 1.4;
+    border: 1.5px solid var(--accent-red-dark);
     cursor: pointer;
-    transition: background .2s;
+    transition: background .2s, color .2s;
+    display:inline-block;
   }
-  .see-code:hover{ background: #4a0a18; }
+  .see-code{
+    background: var(--accent-red-dark);
+    color: #fff;
+  }
+  .see-code:hover{ background: #4a0a18; border-color: #4a0a18; }
+  .live-site{
+    background: transparent;
+    color: var(--accent-red-dark);
+  }
+  .live-site:hover{ background: var(--accent-red-dark); color: #fff; }
 
   /* CONTACT */
   .contact-wrap{
@@ -522,11 +541,11 @@
   </button>
   <nav>
     <ul id="navList">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="javascript:void(0)" data-scroll-to="home">Home</a></li>
+      <li><a href="javascript:void(0)" data-scroll-to="about">About</a></li>
+      <li><a href="javascript:void(0)" data-scroll-to="skills">Skills</a></li>
+      <li><a href="javascript:void(0)" data-scroll-to="projects">Projects</a></li>
+      <li><a href="javascript:void(0)" data-scroll-to="contact">Contact</a></li>
       <li class="social-icons">
         <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
@@ -547,7 +566,7 @@
     <p>I am a passionate Frontend Developer specializing in building modern, responsive, and visually stunning web applications.</p>
     <p>With expertise in HTML, CSS, JavaScript, and React, I create intuitive user experiences that enhance engagement.</p>
     <div class="hero-actions">
-      <button class="cta-btn">Get in touch</button>
+      <button class="cta-btn" data-scroll-to="contact">Get in touch</button>
       <div class="social-icons">
         <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
@@ -635,7 +654,10 @@
       <div class="project-body">
         <h3>Bloggers_Spots</h3>
         <p>Bloggers_Spots provides a platform for bloggers to share content, connect with audiences, and monetize their blogs effectively.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -644,7 +666,10 @@
       <div class="project-body">
         <h3>GalaxyOf_Images</h3>
         <p>GalaxyOf_Images offers a vast collection of high-quality, creative images for designers, marketers, and content creators to enhance their projects.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -653,7 +678,10 @@
       <div class="project-body">
         <h3>Music_Buzz</h3>
         <p>Music_Buzz delivers the latest music news, trends, and updates, keeping fans and artists connected to the pulse of the music industry.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -662,7 +690,10 @@
       <div class="project-body">
         <h3>NETFLIX_CLONE</h3>
         <p>NETFLIX_CLONE is a React-based streaming app replica with user authentication, movie listings, and a dynamic UI.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -671,7 +702,10 @@
       <div class="project-body">
         <h3>Myntra Clone</h3>
         <p>A Myntra clone is a customizable e-commerce platform designed to replicate the features of Myntra.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -680,7 +714,10 @@
       <div class="project-body">
         <h3>Criminal Management System</h3>
         <p>A Criminal Management System Software is a digital tool designed to streamline the tracking, management.</p>
-        <button class="see-code">See Code</button>
+        <div class="project-actions">
+          <button class="see-code">See Code</button>
+          <a href="#" class="live-site" target="_blank" rel="noopener">Live Site</a>
+        </div>
       </div>
     </div>
 
@@ -754,6 +791,15 @@
 
   document.querySelectorAll('nav a').forEach(link=>{
     link.addEventListener('click', ()=> { navList.classList.remove('open'); menuToggle.classList.remove('active'); });
+  });
+
+  // SMOOTH IN-PAGE SCROLL (no URL/hash change, stays on the same page)
+  document.querySelectorAll('[data-scroll-to]').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const target = document.getElementById(el.getAttribute('data-scroll-to'));
+      if(target){ target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
   });
 
   document.querySelector('.contact-form').addEventListener('submit', function(e){
