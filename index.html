@@ -1,272 +1,767 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrivastav | Frontend Developer Portfolio</title>
+<style>
+  :root{
+    --maroon: #6d0826;
+    --maroon-dark: #4a0a18;
+    --maroon-darker: #380713;
+    --card-bg: #ffffff;
+    --text-light: #f5eaea;
+    --text-muted: #e7c9ce;
+    --accent-red: #8b1a2b;
+    --accent-red-dark: #6e0f1f;
+    --code-bg: #101010;
+    --code-green: #7ee787;
+    --code-yellow: #e3b341;
+    --code-orange: #ffa657;
 
-    <title>Shubham Portfolio</title>
+    /* Theme tokens (Dark mode = default) */
+    --bg: var(--maroon);
+    --text: var(--text-light);
+    --text-mut: var(--text-muted);
+    --panel-tint: rgba(255,255,255,0.04);
+    --panel-border: rgba(255,255,255,0.08);
+    --modebtn-bg: #ffffff;
+    --modebtn-text: #2b0510;
+    --cta-bg: #1a1a1a;
+    --cta-text: #ffffff;
+    --icon-bg: rgba(255,255,255,0.1);
+    --icon-color: #f5eaea;
+  }
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css" />
+  body.light-mode{
+    --bg: #d2b3bb;
+    --text: #2a1014;
+    --text-mut: #5c3238;
+    --panel-tint: rgba(0,0,0,0.045);
+    --panel-border: rgba(0,0,0,0.1);
+    --modebtn-bg: #1a1a1a;
+    --modebtn-text: #ffffff;
+    --cta-bg: #5c0e1f;
+    --cta-text: #ffffff;
+    --icon-bg: rgba(0,0,0,0.08);
+    --icon-color: #4a0a18;
+  }
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
+  *{ box-sizing: border-box; margin:0; padding:0; }
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  body{
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background .3s ease, color .3s ease;
+  }
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
+  a { text-decoration: none; color: inherit; }
+  ul { list-style: none; }
+  img { max-width: 100%; display:block; }
 
-  <body>
-    <!-- ================= NAVBAR ================= -->
+  .container{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
 
-    <header>
-      <nav class="navbar">
-        <h2 class="logo">Shrivastav</h2>
+  /* NAVBAR */
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 20px 40px;
+    position: sticky;
+    top:0;
+    background: var(--bg);
+    z-index: 100;
+    flex-wrap: wrap;
+    transition: background .3s ease;
+  }
+  .logo{
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--text);
+  }
+  nav ul{
+    display:flex;
+    gap: 32px;
+    align-items:center;
+  }
+  nav ul li a{
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: opacity .2s;
+    color: var(--text);
+  }
+  nav ul li a:hover{ opacity: 0.7; }
+  .mode-btn{
+    background: var(--modebtn-bg);
+    color: var(--modebtn-text);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border:none;
+    cursor:pointer;
+    transition: background .3s ease, color .3s ease;
+  }
+  .menu-toggle{
+    display:none;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    gap: 5px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: background .2s ease;
+  }
+  .menu-toggle:hover{ background: var(--icon-bg); }
+  .menu-toggle span{
+    width: 24px;
+    height: 3px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: background .3s ease, transform .3s ease, opacity .3s ease;
+  }
+  .menu-toggle.active span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
+  .menu-toggle.active span:nth-child(2){ opacity: 0; }
+  .menu-toggle.active span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
 
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
+  /* SOCIAL ICONS */
+  .social-icons{
+    display:flex;
+    gap: 14px;
+    align-items:center;
+  }
+  .social-icons a{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--icon-bg);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: transform .2s ease, background .3s ease;
+  }
+  .social-icons a:hover{ transform: translateY(-3px); }
+  .social-icons svg{ width: 19px; height: 19px; fill: var(--icon-color); transition: fill .3s ease; }
 
-          <li><a href="#about">About</a></li>
+  /* HERO */
+  .hero{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 40px;
+    padding: 80px 40px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+  .hero-text{
+    max-width: 560px;
+    flex: 1 1 400px;
+  }
+  .hero-text h1{
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .hero-text p{
+    color: var(--text-mut);
+    margin-bottom: 14px;
+    font-size: 1.02rem;
+  }
+  .cta-btn{
+    display:inline-block;
+    margin-top: 18px;
+    background: var(--cta-bg);
+    color: var(--cta-text);
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: transform .2s, background .3s ease, color .3s ease;
+  }
+  .cta-btn:hover{ transform: translateY(-2px); filter: brightness(0.85); }
+  .hero-actions{
+    display:flex;
+    align-items:center;
+    gap: 22px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .hero-actions .cta-btn{ margin-top: 0; }
 
-          <li><a href="#skills">Skills</a></li>
+  .hero-img-wrap{
+    flex: 0 0 auto;
+  }
+  .hero-img{
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b98a5a, #6b4226);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border: 4px solid rgba(255,255,255,0.15);
+    animation: floatY 3.5s ease-in-out infinite;
+  }
+  .hero-img svg{ width: 65%; height: 65%; opacity: 0.9; }
 
-          <li><a href="#projects">Projects</a></li>
+  @keyframes floatY{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-18px); }
+  }
 
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+  /* TYPEWRITER ROLE LINE */
+  .hero-role{
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 18px;
+    min-height: 1.6em;
+  }
+  .hero-role .typed-text{ color: var(--text); }
+  .hero-role .cursor{
+    display:inline-block;
+    margin-left: 2px;
+    color: var(--text);
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink{
+    0%, 100%{ opacity: 1; }
+    50%{ opacity: 0; }
+  }
 
-        <div class="nav-right">
-          <button id="theme-btn">Light Mode</button>
+  /* SECTION HEADINGS */
+  .section-title{
+    text-align:center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--text);
+  }
 
-          <div class="menu-btn">
-            <i class="fas fa-bars"></i>
-          </div>
-        </div>
-      </nav>
-    </header>
+  section{
+    padding: 60px 40px;
+  }
 
-    <!-- ================= HERO ================= -->
+  /* ABOUT */
+  .about-card{
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--panel-tint);
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    padding: 40px;
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .code-block{
+    background: var(--code-bg);
+    border-radius: 12px;
+    padding: 30px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    overflow-x: auto;
+    margin-bottom: 30px;
+  }
+  .code-block .kw{ color: var(--code-orange); }
+  .code-block .key{ color: var(--code-orange); }
+  .code-block .str{ color: var(--code-green); }
+  .code-block .brace{ color: #fff; }
+  .code-line{ white-space: pre; margin-bottom: 6px; }
+  .about-desc{
+    text-align:center;
+    color: var(--text-mut);
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 1rem;
+  }
 
-    <section id="home" class="hero">
-      <div class="hero-left">
-        <h1>Hey, I'm <span>Shubham.</span></h1>
+  /* SKILLS */
+  .skills-grid{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    gap: 40px 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .skill-item{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    gap: 12px;
+    width: 100px;
+  }
+  .skill-icon{
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    background: #fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .skill-icon svg{ width: 42px; height: 42px; }
+  .skill-item span{ font-size: 0.9rem; font-weight: 600; text-align:center; }
 
-        <p>
-          I am a passionate Frontend Developer specializing in building modern,
-          responsive, and visually stunning web applications.
-        </p>
+  /* PROJECTS */
+  .projects-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 26px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .project-card{
+    background: var(--card-bg);
+    color: #2a2a2a;
+    border-radius: 14px;
+    overflow: hidden;
+    display:flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .project-thumb{
+    height: 150px;
+    background: linear-gradient(135deg, #2c3e50, #4a0a18);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .project-body{
+    padding: 20px;
+    display:flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .project-body h3{
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+  }
+  .project-body p{
+    font-size: 0.88rem;
+    color: #555;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+  .see-code{
+    align-self: flex-start;
+    background: var(--accent-red-dark);
+    color: #fff;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .see-code:hover{ background: #4a0a18; }
 
-        <p>
-          With expertise in HTML, CSS, JavaScript, React and Node.js, I create
-          intuitive user experiences.
-        </p>
+  /* CONTACT */
+  .contact-wrap{
+    max-width: 1000px;
+    margin: 0 auto;
+    background: linear-gradient(120deg, var(--accent-red) 0%, #1a1a1a 100%);
+    border-radius: 20px;
+    padding: 50px;
+    display:flex;
+    align-items:center;
+    gap: 50px;
+    flex-wrap: wrap;
+  }
+  .contact-illustration{
+    flex: 0 0 auto;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: #fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin: 0 auto;
+  }
+  .contact-illustration svg{ width: 65%; height: 65%; }
+  .contact-form{
+    flex: 1 1 320px;
+    display:flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .contact-form input,
+  .contact-form textarea{
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder{ color: rgba(255,255,255,0.6); }
+  .contact-form textarea{ resize: vertical; min-height: 100px; }
+  .send-btn{
+    background: var(--accent-red-dark);
+    color:#fff;
+    border:none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor:pointer;
+    transition: background .2s;
+  }
+  .send-btn:hover{ background: #4a0a18; }
 
-        <a href="#contact" class="btn"> Get In Touch </a>
+  footer{
+    text-align:center;
+    padding: 30px;
+    color: var(--text-mut);
+    font-size: 0.85rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 992px){
+    .projects-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 860px){
+    nav ul{
+      position:absolute;
+      top: 100%;
+      left:0;
+      right:0;
+      background: var(--bg);
+      filter: brightness(0.94);
+      flex-direction: column;
+      align-items:center;
+      text-align:center;
+      padding: 24px 20px;
+      gap: 18px;
+      display:none;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+      border-radius: 0 0 16px 16px;
+    }
+    nav ul.open{ display:flex; }
+    nav ul li{ width: 100%; }
+    nav ul li .social-icons{ justify-content:center; }
+    .menu-toggle{ display:flex; }
+    header{ padding: 16px 20px; }
+    .logo{ order: 1; font-size: 1.25rem; }
+    nav{ order: 2; }
+    .menu-toggle{ order: 3; }
+  }
+
+  @media (max-width: 700px){
+    .hero{ flex-direction: column-reverse; text-align:center; padding: 44px 20px 50px; }
+    .hero-text{ max-width: 100%; }
+    .hero-text h1{ font-size: 2.1rem; }
+    .hero-role{ font-size: 1.1rem; }
+    .hero-img{ width: 190px; height: 190px; }
+    .hero-actions{
+      flex-direction: column;
+      justify-content:center;
+      align-items:center;
+      width: 100%;
+      gap: 18px;
+    }
+    .hero-actions .cta-btn{ width: 100%; max-width: 280px; text-align:center; }
+    .hero-actions .social-icons{ justify-content:center; }
+    section{ padding: 50px 20px; }
+    .section-title{ font-size: 1.7rem; }
+    .about-card{ padding: 24px; }
+    .code-block{ padding: 20px; font-size: 0.8rem; }
+    .projects-grid{ grid-template-columns: 1fr; }
+    .contact-wrap{ padding: 30px 16px; flex-direction: column; text-align:center; }
+    .contact-illustration{ width: 160px; height: 160px; }
+    .contact-form{ width: 100%; }
+    .contact-form input,
+    .contact-form textarea{ padding: 16px 18px; font-size: 1rem; }
+    .contact-form textarea{ min-height: 120px; }
+    .skills-grid{ gap: 26px 30px; }
+    .skill-item{ width: 80px; }
+    .skill-icon{ width: 64px; height: 64px; }
+    .skill-icon svg{ width: 34px; height: 34px; }
+  }
+
+  @media (max-width: 420px){
+    .hero-text h1{ font-size: 1.9rem; }
+    .contact-wrap{ padding: 24px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Shrivastav</div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <nav>
+    <ul id="navList">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li class="social-icons">
+        <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+      </li>
+      <li><button class="mode-btn" id="modeBtn">Light Mode</button></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-text">
+    <h1>Hey, I'm Shubham.</h1>
+    <p class="hero-role"><span class="typed-text" id="typedText"></span><span class="cursor">|</span></p>
+    <p>I am a passionate Frontend Developer specializing in building modern, responsive, and visually stunning web applications.</p>
+    <p>With expertise in HTML, CSS, JavaScript, and React, I create intuitive user experiences that enhance engagement.</p>
+    <div class="hero-actions">
+      <button class="cta-btn">Get in touch</button>
+      <div class="social-icons">
+        <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.11-1.52-1.11-1.52-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05a9.29 9.29 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        </a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
       </div>
+    </div>
+  </div>
+  <div class="hero-img-wrap">
+    <div class="hero-img">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.5c-3.3 0-9.8 1.6-9.8 4.9v2.4h19.6v-2.4c0-3.3-6.5-4.9-9.8-4.9z"/></svg>
+    </div>
+  </div>
+</section>
 
-      <div class="hero-right">
-        <img src="images/profile.png" />
+<section id="about">
+  <h2 class="section-title">About Me</h2>
+  <div class="about-card">
+    <div class="code-block">
+      <div class="code-line"><span class="kw">let</span> profile = <span class="brace">{</span></div>
+      <div class="code-line">&nbsp;&nbsp;<span class="key">name:</span> <span class="str">"Shubham Shivendrakumar Shrivastav"</span>,</div>
+      <div class="code-line">&nbsp;&nbsp;<span class="key">job:</span> <span class="str">"Front End Developer"</span>,</div>
+      <div class="code-line">&nbsp;&nbsp;<span class="key">education:</span> <span class="str">"Bsc CS"</span>,</div>
+      <div class="code-line">&nbsp;&nbsp;<span class="key">location:</span> <span class="str">"Mumbai"</span></div>
+      <div class="code-line"><span class="brace">};</span></div>
+    </div>
+    <p class="about-desc">Hi, I'm Shubham Shivendrakumar Shrivastav, a passionate Frontend Developer with a knack for crafting dynamic and user-friendly web experiences. With a solid foundation in JavaScript and a keen eye for detail, I specialize in building intuitive interfaces and robust applications.</p>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#61DAFB"><circle cx="12" cy="12" r="2.2"/><g fill="none" stroke="#61DAFB" stroke-width="1"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></g></svg></div>
+      <span>React JS</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#E44D26"><path d="M3 2l1.7 18.8L12 22l7.3-1.2L21 2H3zm14.6 5.3H8.1l.2 2.3h9.1l-.6 6.7-4.8 1.3-4.8-1.3-.3-3.4h2.2l.2 1.7 2.7.7 2.7-.7.3-3H8.3L7.7 5h9.4l-.5 2.3z"/></svg></div>
+      <span>HTML</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#264DE4"><path d="M3 2l1.7 18.8L12 22l7.3-1.2L21 2H3zm13.9 5.3H8l.2 2.2h8.5l-.6 6.4-4.1 1.1-4.1-1.1-.3-2.9h-2l.4 4.6 6 1.6 6-1.6 1-10.3z"/></svg></div>
+      <span>CSS</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#F0DB4F"><rect x="2" y="2" width="20" height="20"/><path fill="#000" d="M15.5 15.7c.3.6.8 1 1.5 1 .7 0 1.1-.4 1.1-.9 0-.6-.5-.8-1.3-1.2l-.4-.2c-1.3-.6-2.2-1.3-2.2-2.7 0-1.4 1-2.4 2.6-2.4 1.2 0 2 .4 2.6 1.5l-1.4.9c-.3-.6-.7-.8-1.2-.8-.5 0-.9.3-.9.8 0 .5.3.8 1.1 1.1l.4.2c1.5.7 2.4 1.3 2.4 2.8 0 1.6-1.3 2.5-3 2.5-1.7 0-2.7-.8-3.2-1.8l1.5-.8zm-6 .1c.3.5.5.9 1.1.9.6 0 1-.2 1-1.1v-6h1.8v6.1c0 1.9-1.1 2.8-2.7 2.8-1.4 0-2.3-.7-2.7-1.6l1.5-.9z"/></svg></div>
+      <span>JavaScript</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#3C873A"><path d="M12 2c1.1 3 4 4.5 4 8 0 3-2 5-4 5s-4-2-4-5c0-3.5 2.9-5 4-8zm0 15c3.3 0 6 1 6 2.5S15.3 22 12 22s-6-1-6-2.5S8.7 17 12 17z"/></svg></div>
+      <span>Node JS</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#E76F00"><path d="M8.5 17.8s-1 .6.7.8c2 .3 3 .3 5.2-.1 0 0 .6.4 1.4.7-5 2.1-11.3-.1-7.3-1.4zm-.6-2.7s-1.1.8.6 1c2.1.3 3.8.3 6.7-.1 0 0 .4.4 1 .6-6 1.8-12.8.1-8.3-1.5zM14 11.8c1.2 1.4-.3 2.6-.3 2.6s3-1.6 1.6-3.5c-1.3-1.8-2.3-2.7 3.1-5.9 0 0-8.5 2.1-4.4 6.8zM19 19s.7.6-.8.9c-2.8.7-11.6.9-14 0-.9-.3.8-.8 1.3-1 .6-.1.9-.1.9-.1-1-.7-6.4 1.4-2.8 2 10.1 2.6 18.4-1.2 15.4-1.8zM10 8.8s-4.6 1.1-1.6 1.5c1.3.2 3.8.1 6.1-.1 1.9-.2 3.8-.5 3.8-.5s-.7.3-1.1.6c-4.6 1.2-13.6.6-11-.6 2.2-1 3.8-.9 3.8-.9zM17 15.7c4.7-2.4 2.5-4.8 1-4.4-.3.1-.5.2-.5.2s.1-.2.4-.3c2.7-.9 4.8 2.8-1 4.6 0 0 .1-.1.1-.1z"/></svg></div>
+      <span>Java</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#38B2AC"><path d="M12 6c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.8 2 1.5.9 1 2 2.2 4.5 2.2 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.8-2-1.5-.9-1-2-2.2-4.5-2.2zm-5 6c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.8 2 1.5.9 1 2 2.2 4.5 2.2 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.8-2-1.5-.9-1-2-2.2-4.5-2.2z"/></svg></div>
+      <span>Tailwind CSS</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#563D7C"><path d="M5 2h9.5c2.7 0 4.5 1.7 4.5 4.2 0 1.8-1 3-2.3 3.5 1.7.4 2.9 1.8 2.9 3.8 0 2.6-2 4.5-5 4.5H5V2zm4 3.3v3.9h4.3c1.2 0 2-.7 2-1.9 0-1.2-.8-2-2-2H9zm0 6.8v4.6h4.7c1.4 0 2.3-.9 2.3-2.3 0-1.4-.9-2.3-2.3-2.3H9z"/></svg></div>
+      <span>Bootstrap</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24" fill="#47A248"><path d="M12 2s5 4.5 5 11c0 3.5-2.2 6-5 7-2.8-1-5-3.5-5-7 0-6.5 5-11 5-11zm0 4v13"/></svg></div>
+      <span>MongoDB</span>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon"><svg viewBox="0 0 24 24"><path fill="#3776AB" d="M12 2c-3 0-3.4 1.3-3.4 3v1.6H12v.7H6.5C4.6 7.3 3 8.6 3 12s1.6 4.7 3.5 4.7h1.4v-2.2c0-2.1 1.8-3.9 4-3.9h3.2c1.8 0 3.2-1.4 3.2-3.2V5c0-1.7-1.5-3-3.4-3H12z"/><path fill="#FFD43B" d="M12 22c3 0 3.4-1.3 3.4-3v-1.6H12v-.7h5.5c1.9 0 3.5-1.3 3.5-4.7s-1.6-4.7-3.5-4.7h-1.4v2.2c0 2.1-1.8 3.9-4 3.9H8.9c-1.8 0-3.2 1.4-3.2 3.2V19c0 1.7 1.5 3 3.4 3H12z"/></svg></div>
+      <span>Python</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2 class="section-title">Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-thumb">Bloggers_Spots preview</div>
+      <div class="project-body">
+        <h3>Bloggers_Spots</h3>
+        <p>Bloggers_Spots provides a platform for bloggers to share content, connect with audiences, and monetize their blogs effectively.</p>
+        <button class="see-code">See Code</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= ABOUT ================= -->
-
-    <section id="about">
-      <h2 class="title">About Me</h2>
-
-      <div class="about-card">
-        <div class="code-box">
-          <pre>
-
-let profile = {
-
-name : "Shubham Shrivastav",
-
-job : "Full Stack Developer",
-
-education : "MCA",
-
-location : "Mumbai",
-
-skills : [
-"React",
-"Node",
-"MongoDB",
-"Java",
-"Python"
-]
-
-}
-
-</pre
-          >
-        </div>
-
-        <p>
-          Hi, I'm Shubham Shrivastav, a passionate Full Stack Developer who
-          loves creating beautiful, responsive and modern websites.
-        </p>
+    <div class="project-card">
+      <div class="project-thumb">GalaxyOf_Images preview</div>
+      <div class="project-body">
+        <h3>GalaxyOf_Images</h3>
+        <p>GalaxyOf_Images offers a vast collection of high-quality, creative images for designers, marketers, and content creators to enhance their projects.</p>
+        <button class="see-code">See Code</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= SKILLS ================= -->
-
-    <section id="skills">
-      <h2 class="title">Skills</h2>
-
-      <div class="skills-grid">
-        <div class="skill">
-          <i class="fa-brands fa-react"></i>
-          <p>React</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-html5"></i>
-          <p>HTML</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-css3-alt"></i>
-          <p>CSS</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-js"></i>
-          <p>JavaScript</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-node-js"></i>
-          <p>Node JS</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-java"></i>
-          <p>Java</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-python"></i>
-          <p>Python</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-solid fa-database"></i>
-          <p>MongoDB</p>
-        </div>
-
-        <div class="skill">
-          <i class="fa-brands fa-bootstrap"></i>
-          <p>Bootstrap</p>
-        </div>
+    <div class="project-card">
+      <div class="project-thumb">Music_Buzz preview</div>
+      <div class="project-body">
+        <h3>Music_Buzz</h3>
+        <p>Music_Buzz delivers the latest music news, trends, and updates, keeping fans and artists connected to the pulse of the music industry.</p>
+        <button class="see-code">See Code</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= PROJECTS ================= -->
-
-    <section id="projects">
-      <h2 class="title">Projects</h2>
-
-      <div class="projects-grid">
-        <div class="project">
-          <img src="images/project1.png" />
-
-          <h3>Netflix Clone</h3>
-
-          <p>React based Netflix UI Clone.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
-
-        <div class="project">
-          <img src="images/project2.png" />
-
-          <h3>GreenCart</h3>
-
-          <p>MERN Grocery Website.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
-
-        <div class="project">
-          <img src="images/project3.png" />
-
-          <h3>EduFlow</h3>
-
-          <p>Learning Platform.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
-
-        <div class="project">
-          <img src="images/project4.png" />
-
-          <h3>Music Buzz</h3>
-
-          <p>Music Streaming Website.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
-
-        <div class="project">
-          <img src="images/project5.png" />
-
-          <h3>Myntra Clone</h3>
-
-          <p>E-commerce Website.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
-
-        <div class="project">
-          <img src="images/project6.png" />
-
-          <h3>Crime System</h3>
-
-          <p>Management Dashboard.</p>
-
-          <a href="#" class="project-btn"> See Code </a>
-        </div>
+    <div class="project-card">
+      <div class="project-thumb">NETFLIX_CLONE preview</div>
+      <div class="project-body">
+        <h3>NETFLIX_CLONE</h3>
+        <p>NETFLIX_CLONE is a React-based streaming app replica with user authentication, movie listings, and a dynamic UI.</p>
+        <button class="see-code">See Code</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= CONTACT ================= -->
-
-    <section id="contact">
-      <h2 class="title">Contact Me</h2>
-
-      <div class="contact-container">
-        <div class="contact-image">
-          <img src="images/contact.png" />
-        </div>
-
-        <form>
-          <input type="text" placeholder="Your Name" />
-
-          <input type="email" placeholder="Your Email" />
-
-          <textarea placeholder="Your Message"></textarea>
-
-          <button>Send</button>
-        </form>
+    <div class="project-card">
+      <div class="project-thumb">Myntra Clone preview</div>
+      <div class="project-body">
+        <h3>Myntra Clone</h3>
+        <p>A Myntra clone is a customizable e-commerce platform designed to replicate the features of Myntra.</p>
+        <button class="see-code">See Code</button>
       </div>
-    </section>
+    </div>
 
-    <!-- ================= FOOTER ================= -->
+    <div class="project-card">
+      <div class="project-thumb">Criminal Management System preview</div>
+      <div class="project-body">
+        <h3>Criminal Management System</h3>
+        <p>A Criminal Management System Software is a digital tool designed to streamline the tracking, management.</p>
+        <button class="see-code">See Code</button>
+      </div>
+    </div>
 
-    <footer>
-      <p>© 2026 Shubham Shrivastav. All Rights Reserved.</p>
-    </footer>
+  </div>
+</section>
 
-    <script src="script.js"></script>
-  </body>
+<section id="contact">
+  <h2 class="section-title">Contact Me</h2>
+  <div class="contact-wrap">
+    <div class="contact-illustration">
+      <svg viewBox="0 0 24 24" fill="#8b1a2b"><path d="M4 4h16v12H5.2L4 17.2V4zm2 2v9.2L5.8 16H18V6H6z"/><circle cx="9" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="15" cy="10" r="1"/></svg>
+    </div>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit" class="send-btn">Send</button>
+    </form>
+  </div>
+  <footer>&copy; 2025 Shubham Shrivastav. All rights reserved.</footer>
+</section>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navList = document.getElementById('navList');
+  menuToggle.addEventListener('click', () => {
+    navList.classList.toggle('open');
+    menuToggle.classList.toggle('active');
+  });
+
+  const modeBtn = document.getElementById('modeBtn');
+  modeBtn.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    // Label always shows the mode you'll switch TO next.
+    modeBtn.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+  });
+
+  // TYPEWRITER EFFECT
+  const roles = ["Software Developer", "Frontend Developer", "Backend Developer", "Full Stack Developer"];
+  const typedTextEl = document.getElementById('typedText');
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeLoop(){
+    const current = roles[roleIndex];
+
+    if(isDeleting){
+      charIndex--;
+    } else {
+      charIndex++;
+    }
+
+    typedTextEl.textContent = current.substring(0, charIndex);
+
+    let speed = isDeleting ? 45 : 90;
+
+    if(!isDeleting && charIndex === current.length){
+      speed = 1400; // pause at full word
+      isDeleting = true;
+    } else if(isDeleting && charIndex === 0){
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      speed = 400; // pause before typing next word
+    }
+
+    setTimeout(typeLoop, speed);
+  }
+
+  typeLoop();
+
+  document.querySelectorAll('nav a').forEach(link=>{
+    link.addEventListener('click', ()=> { navList.classList.remove('open'); menuToggle.classList.remove('active'); });
+  });
+
+  document.querySelector('.contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Thanks for reaching out! (Connect this form to a backend or service like Formspree to actually send messages.)');
+    this.reset();
+  });
+</script>
+
+</body>
 </html>
